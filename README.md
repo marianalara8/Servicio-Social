@@ -8,6 +8,7 @@
 <ul>
 <li>Puntos en poligonos: Nombre.R </li>
 <li>lista</li>
+<<li>arbol de predictores</li>
 </ul>
 
 
