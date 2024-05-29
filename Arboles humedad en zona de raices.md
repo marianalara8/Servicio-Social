@@ -4,7 +4,7 @@
 
 para este proyecto se utilizaron datos del proyecto MERRA-2 de la nasa disponibles en el vinculo: [https://disc.gsfc.nasa.gov/datasets](https://disc.gsfc.nasa.gov/datasets?page=1)
 
-Asi tambien se utilizaron datos cambio de uso de suelo desde lo historico, los que estan disponibles en: [https://luh.umd.edu](https://luh.umd.edu)
+Asi tambien se utilizaron datos cambio de uso de suelo desde lo historico (states), los que estan disponibles en: [https://luh.umd.edu](https://luh.umd.edu)
 
 Se utilizo el siguiente codigo para la creacion de los arboles: 
 
@@ -21,4 +21,18 @@ Se utilizo el siguiente codigo para la creacion de los arboles:
 
 ![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_medias1985.png)
 
-> Arbol de decision con datos de MERRA-2 en 2015 y states de 1985.
+> Arbol de decision con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 1985.
+
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/arbol_varianzas1985.png)
+
+> Arbol de decision con datos de MERRA-2 en 2015, en varianzas de todo el año clasificado en quantiles y states de 1985.
+
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_correlacion1985.png)
+
+> Arbol de decision con datos de MERRA-2 en 2015, en correlacion de (t)-(t-1) de todo el año clasificado en quantiles y states de 1985.
+
+
+
+
