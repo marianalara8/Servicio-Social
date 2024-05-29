@@ -35,4 +35,19 @@ Se utilizo el siguiente codigo para la creacion de los arboles:
 
 
 
+![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_medias2015.png)
+
+> Arbol de decision con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
+
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_varianzas2015.png)
+
+> Arbol de decision con datos de MERRA-2 en 2015, en varianzas de todo el año clasificado en quantiles y states de 2015.
+
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_correlacion2015.png)
+
+> Arbol de decision con datos de MERRA-2 en 2015, en correlacion de (t)-(t-1) de todo el año clasificado en quantiles y states de 1015.
+
+
 
