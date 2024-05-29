@@ -21,4 +21,4 @@ Se utilizo el siguiente codigo para la creacion de los arboles:
 
 ![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_medias1985.png)
 
-> Follow your heart.
+> Arbol de decision con datos de MERRA-2 en 2015 y states de 1985.
