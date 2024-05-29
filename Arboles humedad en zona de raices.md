@@ -18,4 +18,7 @@ Se utilizo el siguiente codigo para la creacion de los arboles:
                         data = df_arbol, method = "class")
         rpart.plot(arbol_medias1985)
 
-  
+
+![]([https://pandao.github.io/editor.md/examples/images/4.jpg](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_medias1985.png))
+
+> Follow your heart.
