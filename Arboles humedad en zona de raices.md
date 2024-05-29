@@ -39,6 +39,11 @@ Se utilizo el siguiente codigo para la creacion de los arboles:
 
 > Arbol de decision con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
 
+La variable que mejor divide los datos de humedad en zona de raices es la vegetacion secundaria no forestal, si en el pixel esta la prescencia de esta vegetacion, se encuentra los datos que estan clasificados en el quantil 1, los cuales cuentan con una baja humedad. Posterior a esto estos datos del quantil 1 se dividen a partir de la prescencia o no prescencia de pastoreo en el pixel, pues las zonas que se utilizan para pastoreo se encuentran en los datos del quantil 2, los cuales tienen rangos de humedad de entre 0.7651528  y 0.8232305 en una escala donde 1 es el valor maximo de humedad, donde se encuentra indundado el suelo y 0 es el valor minimo de humedad, donde el suelo se encuentra seco. 
+
+Por otra parte, al dividir los datos a partir de la prescenia o no prescencia de vegetacion secundaria no forestal, la parte que no cuenta con esta vegetacion es principalmente la del quantil 4, el cual es el quantil con mayor humedad, posterior a
+
+
 
 ![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_varianzas2015.png)
 
