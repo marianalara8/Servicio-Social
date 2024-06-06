@@ -9,39 +9,35 @@ Asi tambien se utilizaron datos cambio de uso de suelo desde lo historico (state
 Primeramente se realizo un manejo de los datos, homologando los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, asi como la variacion y la autocorrelacion de los datos a partir de una correlacion de tipo (t)-(t-1). 
 
 Por ultimo, se clasificaron los datos en cuantiles, los cuales se definieron de la siguiente manera: 
-- cuantiles de medias:
+- Cuantiles de medias:
     - q1 (0.08615126 - 0.45906625)
     - q2 (0.45906625 - 0.61188439)
     - q3 (0.61188439 - 0.78798726)
     - q4 (0.78798726 - 0.99998690)
--
-
-Se utilizo el siguiente codigo para la creacion de los arboles: 
-
-    df_arbol<- read.csv("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/merra_2015/data_arbol.csv")
+- Cuantiles de la varianza:
+    - q1 (7.567547e-11 - 6.917665e-04)
+    - q2 (6.917665e-04 - 2.102787e-03)
+    - q3 (2.102787e-03 - 5.823124e-03)
+    - q4 (5.823124e-03 - 7.610146e-02)
+- Cuantiles de correlacion
+    - q1 (-0.8201559 - 0.5326473)
+    - q2 (0.5326473 - 0.6967764)
+    - q3 (0.6967764 - 0.8093142)
+    - q4 (0.8093142 - 0.9980967)
  
-        arbol_medias1985 <- rpart(Quantiles_medias~ 
-                        manejo1985 + X1985.primf + X1985.primn + X1985.secdf +
-                        X1985.secdn + X1985.urban + X1985.c3ann +  
-                        X1985.c4ann + X1985.c3per + X1985.c4per + 
-                        X1985.c3nfx + X1985.pastr + X1985.range,
-                        data = df_arbol, method = "class")
-        rpart.plot(arbol_medias1985)
+Apartir de esta calsificacion se realizo una base de datos que contenia las coordenadas de los centroides de cada pixel, junto con su respectiva clasificacion de medias, varianza y correlacion, en conjunto con los datos de cada tipo de uso de suelo del año 2015. 
+
+Despues de esto se utilizo el siguiente codigo para la creacion del arbol de clasificacion: 
+
+    df_arbol<- read.csv("merra_2015/data_arbol.csv")
+    arbol_medias2015 <- rpart(Quantiles_medias~ 
+                            nomanejo2015 + X2015.primf + X2015.primn +                                      X2015.secdf + X2015.secdn + X2015.urban +                                       X2015.c3ann + X2015.c4ann + X2015.c3per +                                       X2015.c4per + X2015.c3nfx + X2015.pastr +                                       X2015.range, data = df_arbol, method = "class")
+    rpart.plot(arbol_medias2015)
+        
 
 
-![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_medias1985.png)
-
-> Arbol de decision con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 1985.
 
 
-![](https://github.com/marianalara8/Servicio-Social/blob/main/arbol_varianzas1985.png)
-
-> Arbol de decision con datos de MERRA-2 en 2015, en varianzas de todo el año clasificado en quantiles y states de 1985.
-
-
-![](https://github.com/marianalara8/Servicio-Social/blob/main/Arbol_correlacion1985.png)
-
-> Arbol de decision con datos de MERRA-2 en 2015, en correlacion de (t)-(t-1) de todo el año clasificado en quantiles y states de 1985.
 
 
 
