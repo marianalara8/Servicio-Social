@@ -1,10 +1,20 @@
 # Arboles de prediccion de uso de suelo con humedad en zona de raices 
 
-## arboles 1985 states vs 2015 humedad
+## arboles de 2015 humedad
 
-para este proyecto se utilizaron datos del proyecto MERRA-2 de la nasa disponibles en el vinculo: [https://disc.gsfc.nasa.gov/datasets](https://disc.gsfc.nasa.gov/datasets?page=1)
+para este proyecto se utilizaron datos del proyecto MERRA-2 de la nasa disponibles en el vinculo: [https://disc.gsfc.nasa.gov/datasets](https://disc.gsfc.nasa.gov/datasets?page=1). De estos datos, se utilizo la serie de tiempo de 2015 desde el mes de enero hasta el mes de diciembre del mismo año, extraidos como datos de mes con mes. 
 
-Asi tambien se utilizaron datos cambio de uso de suelo desde lo historico (states), los que estan disponibles en: [https://luh.umd.edu](https://luh.umd.edu)
+Asi tambien se utilizaron datos cambio de uso de suelo desde lo historico (states), los que estan disponibles en: [https://luh.umd.edu](https://luh.umd.edu). En cuanto a estos datos unicamente se extrajo la capa de datos para 2015.
+
+Primeramente se realizo un manejo de los datos, homologando los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, asi como la variacion y la autocorrelacion de los datos a partir de una correlacion de tipo (t)-(t-1). 
+
+Por ultimo, se clasificaron los datos en cuantiles, los cuales se definieron de la siguiente manera: 
+- cuantiles de medias:
+    - q1 (0.08615126 - 0.45906625)
+    - q2 (0.45906625 - 0.61188439)
+    - q3 (0.61188439 - 0.78798726)
+    - q4 (0.78798726 - 0.99998690)
+-
 
 Se utilizo el siguiente codigo para la creacion de los arboles: 
 
