@@ -54,14 +54,26 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
       land = raster::extract(states2015, centroids) 
       
  
-
-Primeramente, se realizo una vista minable, en la cual se homologaron los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, así como la variación y la autocorrelación de los datos a partir de una correlación de tipo (t)-(t-1). Lo cual se presenta en el siguiente codigo: 
-
+ Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, así como la variación y la autocorrelación de los datos a partir de una correlación de tipo (t)-(t-1). Lo cual se presenta en el siguiente codigo: 
 
 
+      # Crear matriz
+      data_merra2015 <- cbind(lon=centroids[,1], lat=centroids[,2], merra2015 )
+      
+      #trabajo con la database merra 2015
+      M= NULL
+      V= NULL
+      C= NULL
+      n= length(data_merra2015[,1]) 
 
+      for(i in 1:n){
+        M[i]= mean(data_merra2015[i,3:14]) 
+        V[i]= var(data_merra2015[i,3:14])
+        C[i]= cor(x=data_merra2015[i,3:13], y=data_merra2015[i,4:14])
+        print(i)
+}
 
-Por último, se clasificaron los datos en cuantiles, los cuales se definieron de la siguiente manera: 
+Despues de esto, se clasificaron los datos en cuantiles, los cuales se definieron de la siguiente manera: 
 - Cuantiles de medias:
     - q1 (0.08615126 - 0.45906625)
     - q2 (0.45906625 - 0.61188439)
@@ -77,8 +89,47 @@ Por último, se clasificaron los datos en cuantiles, los cuales se definieron de
     - q2 (0.5326473 - 0.6967764)
     - q3 (0.6967764 - 0.8093142)
     - q4 (0.8093142 - 0.9980967)
- 
-A partir de esta clasificación se realizó una base de datos que contiene las coordenadas de los centroides de cada pixel, junto con su respectiva clasificación de medias, varianza y correlación, en conjunto con los datos de cada tipo de uso de suelo del año 2015. Además de una última variable que es si no existe manejo antropogénico en el pixel, la cual es una suma de los usos de suelo; Vegetación primaria forestal, vegetación primaria no forestal, vegetación secundaria forestal y vegetación secundaria no forestal.  
+
+Para esta clasificacion se utilizo el siguiente codigo: 
+
+      #Definir funcion que clasifique los cuantiles
+      quanti <- function(df){
+        Q<-rep(0, length(df)) 
+        q<- quantile(df, prob=c(0,0.25,0.5,0.75,1))
+        print(q)
+        i=1
+        for (i in 1:length(df)) {
+          if(df[i ]> q[[1]] & df[i]<=q[[2]]) {
+            Q[i] ='q1'
+          }
+          
+          else if ( df[i]>q[[2]] & df[i]<=q[[3]] ){
+            Q[i] ='q2'
+          }
+          else if ( df[i]>q[[3]] & df[i]<=q[[4]] ){
+          Q[i] ='q3'
+          }
+          else if( df[i]>q[[4]] & df[i]<=q[[5]] ){
+          Q[i] ='q4'
+          }
+        }
+        return(Q)
+        }
+
+      #Uso de la función 
+      Quantiles_medias <- quanti(M)
+      Quantiles_varianza <- quanti(V)
+      Quantiles_correlacion <- quanti(C)
+
+Por ultimo se creo una variable que contiene el manejo o no manejo antropogenico del suelo, es decir, se sumo la proporcion de cada prixel en las clases de uso de sulo, para el no manejo se utilizazon las clases: primf, primn, secdf y secdn. Esto se realizo con el codigo a continuacion: 
+
+      nomanejo2015 <- land[,1] + land[,2] + land[,3] + land[,4]
+      manejo2015 <- land[,5] + land[,6] + land[,7] + land[,8] + land[,9] +           land[,10] + land[,11] + land[,12]
+
+
+A partir de esta clasificación se realizó una vista minable que contiene las coordenadas de los centroides de cada pixel, junto con su respectiva clasificación de medias, varianza y correlación, en conjunto con los datos de cada tipo de uso de suelo del año 2015. Además de una última variable que es si no existe manejo antropogénico en el pixel. lo cual se realizo con el siguiente codigo:   
+
+      data_arbol2015<- cbind(lon=centroids[,1], lat=centroids[,2],            Quantiles_medias, Quantiles_varianza, Quantiles_correlacion, nomanejo2015, manejo2015, land)
 
 Después de esto se utilizó el siguiente código para la creación del árbol de clasificación:
    
