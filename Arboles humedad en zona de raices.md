@@ -8,8 +8,8 @@ Así también se utilizaron datos cambio de uso de suelo desde lo histórico (st
 
 Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de humedad, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
 
-   #Asignación de nombre al archivo
-   filename <- "~/states_historic.nc"
+   Asignación de nombre al archivo
+   filename <- "~/states_historic.nc" #hgwhgbq
    names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
    #Abrir cada capa por variable de uso de suelo para la banda 1166, correspondiente al año 2015
    primf_2015 <- raster(filename,varname="primf", band=1166)
