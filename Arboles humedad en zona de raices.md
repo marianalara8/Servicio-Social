@@ -62,7 +62,7 @@ A partir de esta clasificación se realizó una base de datos que contiene las c
 
 Después de esto se utilizó el siguiente código para la creación del árbol de clasificación:
    
-   df_arbol<- read.csv("merra_2015/data_arbol.csv")
+    df_arbol<- read.csv("merra_2015/data_arbol.csv")
     arbol_medias2015 <- rpart(Quantiles_medias~ 
                             nomanejo2015 + X2015.primf + X2015.primn +                                      X2015.secdf + X2015.secdn + X2015.urban +                                       X2015.c3ann + X2015.c4ann + X2015.c3per +                                       X2015.c4per + X2015.c3nfx + X2015.pastr +                                       X2015.range, data = df_arbol, method = "class")
     rpart.plot(arbol_medias2015)
