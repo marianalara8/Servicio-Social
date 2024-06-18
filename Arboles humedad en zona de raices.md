@@ -25,15 +25,35 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
       pastr_2015 <- raster(filename,varname="pastr", band=1166) 
       range_2015 <- raster(filename,varname="range", band=1166) 
    
-   # Creacion de rasteer multivariable
-   states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015,             urban_2015, c3ann_2015, c4ann_2015, c3per_2015, c4per_2015, c3nfx_2015,         pastr_2015, range_2015)
-   # Asignar nombre a cada variable
-   names(states2015) <- paste("2015",names_states)
-   
-   # Abrir archivo ejemplo de humedad en zona de raices para obtener centroides
-   archivo<- "~/MERRA2_400.tavgM_2d_lnd_Nx.201501.nc4.nc4"
-   ras<- raster(archivo)
+      # Creacion de rasteer multivariable
+      states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015,                         urban_2015, c3ann_2015, c4ann_2015,                
+                  c3per_2015, c4per_2015, c3nfx_2015,         
+                  pastr_2015, range_2015)
+      # Asignar nombre a cada variable
+      names(states2015) <- paste("2015",names_states)
 
+       # abrir carpeta con todos los archivos de humedad en 2015 y crear raster multicapa
+      setwd("/merra_2015")
+      files2015<- list.files(pattern = ".nc4", full.names = FALSE)
+      files.ras2015 <- lapply(files2015, raster)
+      fechas2015<- substr(files2015, star=28, stop=33) #extraer fechas
+      names(files.ras2015) <- paste('WROOT',fechas2015) 
+      files.stack2015 <- stack(files.ras2015)
+      
+      # Abrir archivo ejemplo de humedad en zona de raices para obtener centroides
+      archivo<- "~/MERRA2_400.tavgM_2d_lnd_Nx.201501.nc4.nc4"
+      ras<- raster(archivo)
+      
+      #obtener centroides
+      # Transform into polygon
+      poly = rasterToPolygons(ras)
+      # Add centroids to database
+      centroids <- getSpPPolygonsLabptSlots(poly)
+      # save it into GeoJSON of merra
+      merra2015 = raster::extract(files.stack2015, centroids)
+      land = raster::extract(states2015, centroids) 
+      
+ 
 
 Primeramente, se realizo una vista minable, en la cual se homologaron los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, así como la variación y la autocorrelación de los datos a partir de una correlación de tipo (t)-(t-1). Lo cual se presenta en el siguiente codigo: 
 
