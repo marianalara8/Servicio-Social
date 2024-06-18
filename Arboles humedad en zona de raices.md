@@ -8,22 +8,22 @@ Así también se utilizaron datos cambio de uso de suelo desde lo histórico (st
 
 Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de humedad, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
 
-      Asignación de nombre al archivo
-   filename <- "~/states_historic.nc" 
-   names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
-   #Abrir cada capa por variable de uso de suelo para la banda 1166, correspondiente al año 2015
-   primf_2015 <- raster(filename,varname="primf", band=1166)
-   primn_2015 <- raster(filename,varname="primn", band=1166)
-   secdf_2015 <- raster(filename,varname="secdf", band=1166) 
-   secdn_2015 <- raster(filename,varname="secdn", band=1166)
-   urban_2015 <- raster(filename,varname="urban", band=1166) 
-   c3ann_2015 <- raster(filename,varname="c3ann", band=1166) 
-   c4ann_2015 <- raster(filename,varname="c4ann", band=1166) 
-   c3per_2015 <- raster(filename,varname="c3per", band=1166) 
-   c4per_2015 <- raster(filename,varname="c4per", band=1166) 
-   c3nfx_2015 <- raster(filename,varname="c3nfx", band=1166) 
-   pastr_2015 <- raster(filename,varname="pastr", band=1166) 
-   range_2015 <- raster(filename,varname="range", band=1166) 
+      # Asignación de nombre al archivo
+      filename <- "~/states_historic.nc"       
+      names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
+      # Abrir cada capa por variable de uso de suelo para la banda 1166, correspondiente al año 2015
+      primf_2015 <- raster(filename,varname="primf", band=1166)
+      primn_2015 <- raster(filename,varname="primn", band=1166) 
+      secdf_2015 <- raster(filename,varname="secdf", band=1166) 
+      secdn_2015 <- raster(filename,varname="secdn", band=1166)
+      urban_2015 <- raster(filename,varname="urban", band=1166) 
+      c3ann_2015 <- raster(filename,varname="c3ann", band=1166) 
+      c4ann_2015 <- raster(filename,varname="c4ann", band=1166) 
+      c3per_2015 <- raster(filename,varname="c3per", band=1166) 
+      c4per_2015 <- raster(filename,varname="c4per", band=1166) 
+      c3nfx_2015 <- raster(filename,varname="c3nfx", band=1166) 
+      pastr_2015 <- raster(filename,varname="pastr", band=1166) 
+      range_2015 <- raster(filename,varname="range", band=1166) 
    
    # Creacion de rasteer multivariable
    states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015,             urban_2015, c3ann_2015, c4ann_2015, c3per_2015, c4per_2015, c3nfx_2015,         pastr_2015, range_2015)
