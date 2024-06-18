@@ -2,11 +2,44 @@
 
 ## arboles de 2015 humedad
 
-para este proyecto se utilizaron datos del proyecto MERRA-2 de la nasa disponibles en el vínculo: [https://disc.gsfc.nasa.gov/datasets](https://disc.gsfc.nasa.gov/datasets?page=1). De estos datos, se utilizó la serie de tiempo de 2015 desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes. 
+para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el vínculo: [https://disc.gsfc.nasa.gov/datasets](https://disc.gsfc.nasa.gov/datasets?page=1). En estos datos, se tiene disponible informacion de 1890 a 2024, de sistintas variables entre las cuales se encuentra la tasa de humedad en la zona de raices por pixel. Asi, se realizo una mineria de datos, obteniendo unicamente la serie de tiempo correspondiente al año 2015, con datos desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes. 
 
-Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los que están disponibles en: [https://luh.umd.edu](https://luh.umd.edu). En cuanto a estos datos únicamente se extrajo la capa de datos para 2015.
+Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los que están disponibles en: [https://luh.umd.edu](https://luh.umd.edu). Lo que proporciona esta base de datos es un recuento historico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos únicamente se minó la capa de datos correspondientes al año 2015.
 
-Primeramente, se realizó un manejo de los datos, homologando los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, así como la variación y la autocorrelación de los datos a partir de una correlación de tipo (t)-(t-1). 
+Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de humedad, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
+
+   # Asignación de nombre al archivo
+   filename <- "~/states_historic.nc"
+   names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
+   # Abrir cada capa por variable de uso de suelo para la banda 1166, correspondiente al año 2015
+   primf_2015 <- raster(filename,varname="primf", band=1166)
+   primn_2015 <- raster(filename,varname="primn", band=1166)
+   secdf_2015 <- raster(filename,varname="secdf", band=1166) 
+   secdn_2015 <- raster(filename,varname="secdn", band=1166)
+   urban_2015 <- raster(filename,varname="urban", band=1166) 
+   c3ann_2015 <- raster(filename,varname="c3ann", band=1166) 
+   c4ann_2015 <- raster(filename,varname="c4ann", band=1166) 
+   c3per_2015 <- raster(filename,varname="c3per", band=1166) 
+   c4per_2015 <- raster(filename,varname="c4per", band=1166) 
+   c3nfx_2015 <- raster(filename,varname="c3nfx", band=1166) 
+   pastr_2015 <- raster(filename,varname="pastr", band=1166) 
+   range_2015 <- raster(filename,varname="range", band=1166) 
+   
+   # Creacion de rasteer multivariable
+   states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015,             urban_2015, c3ann_2015, c4ann_2015, c3per_2015, c4per_2015, c3nfx_2015,         pastr_2015, range_2015)
+   # Asignar nombre a cada variable
+   names(states2015) <- paste("2015",names_states)
+   
+   # Abrir archivo ejemplo de humedad en zona de raices para obtener centroides
+   archivo<- "~/MERRA2_400.tavgM_2d_lnd_Nx.201501.nc4.nc4"
+   ras<- raster(archivo)
+
+
+Primeramente, se realizo una vista minable, en la cual se homologaron los datos a partir de los centroides de los datos de MERRA-2. Posterior a esto, se calcularon los promedios por pixel a lo largo de la serie de tiempo, así como la variación y la autocorrelación de los datos a partir de una correlación de tipo (t)-(t-1). Lo cual se presenta en el siguiente codigo: 
+
+
+
+
 
 Por último, se clasificaron los datos en cuantiles, los cuales se definieron de la siguiente manera: 
 - Cuantiles de medias:
