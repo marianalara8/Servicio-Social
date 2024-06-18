@@ -9,7 +9,7 @@ Así también se utilizaron datos cambio de uso de suelo desde lo histórico (st
 Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de humedad, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
 
    Asignación de nombre al archivo
-   filename <- "~/states_historic.nc" #hgwhgbq
+   filename <- "~/states_historic.nc" 
    names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
    #Abrir cada capa por variable de uso de suelo para la banda 1166, correspondiente al año 2015
    primf_2015 <- raster(filename,varname="primf", band=1166)
@@ -61,8 +61,8 @@ Por último, se clasificaron los datos en cuantiles, los cuales se definieron de
 A partir de esta clasificación se realizó una base de datos que contiene las coordenadas de los centroides de cada pixel, junto con su respectiva clasificación de medias, varianza y correlación, en conjunto con los datos de cada tipo de uso de suelo del año 2015. Además de una última variable que es si no existe manejo antropogénico en el pixel, la cual es una suma de los usos de suelo; Vegetación primaria forestal, vegetación primaria no forestal, vegetación secundaria forestal y vegetación secundaria no forestal.  
 
 Después de esto se utilizó el siguiente código para la creación del árbol de clasificación:
-
-    df_arbol<- read.csv("merra_2015/data_arbol.csv")
+   
+   df_arbol<- read.csv("merra_2015/data_arbol.csv")
     arbol_medias2015 <- rpart(Quantiles_medias~ 
                             nomanejo2015 + X2015.primf + X2015.primn +                                      X2015.secdf + X2015.secdn + X2015.urban +                                       X2015.c3ann + X2015.c4ann + X2015.c3per +                                       X2015.c4per + X2015.c3nfx + X2015.pastr +                                       X2015.range, data = df_arbol, method = "class")
     rpart.plot(arbol_medias2015)
