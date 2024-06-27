@@ -1,6 +1,10 @@
 # arboles de prediccion de cambios en el manejo forestal 
 
-para realizar este.  analisis, se utilizaron dos bases de datos, la primera siendo la de cambio de uso del suelo, la cual se encuentra disponible en el siguiente enlace: enlace 
+para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el vínculo: https://disc.gsfc.nasa.gov/datasets. En estos datos, se tiene disponible informacion de 1890 a 2024, de sistintas variables entre las cuales se encuentra la tasa de humedad en la zona de raices por pixel. Asi, se realizo una mineria de datos, obteniendo unicamente la serie de tiempo correspondiente al año 2015, con datos desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes.
+
+Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los que están disponibles en: https://luh.umd.edu. Lo que proporciona esta base de datos es un recuento historico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos se minaron la capa de datos correspondientes a los años 2015 y 1985.
+
+Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de cambio de uso del suelo, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
 
     require(ncdf4)
     library(raster)
@@ -31,41 +35,6 @@ para realizar este.  analisis, se utilizaron dos bases de datos, la primera sien
     states1985 <- stack(primf_1985, primn_1985, secdf_1985, secdn_1985, urban_1985, c3ann_1985, c4ann_1985, c3per_1985, c4per_1985, c3nfx_1985, pastr_1985, range_1985)
     names(states1985) <- paste("1985",names_states)
     
-    
-    primf_1995 <- raster(filename,varname="primf", band=1146) 
-    primn_1995 <- raster(filename,varname="primn", band=1146) 
-    secdf_1995 <- raster(filename,varname="secdf", band=1146) 
-    secdn_1995 <- raster(filename,varname="secdn", band=1146) 
-    urban_1995 <- raster(filename,varname="urban", band=1146) 
-    c3ann_1995 <- raster(filename,varname="c3ann", band=1146) 
-    c4ann_1995 <- raster(filename,varname="c4ann", band=1146) 
-    c3per_1995 <- raster(filename,varname="c3per", band=1146) 
-    c4per_1995 <- raster(filename,varname="c4per", band=1146) 
-    c3nfx_1995 <- raster(filename,varname="c3nfx", band=1146)
-    pastr_1995 <- raster(filename,varname="pastr", band=1146)
-    range_1995 <- raster(filename,varname="range", band=1146) 
-    
-    states1995 <- stack(primf_1995, primn_1995, secdf_1995, secdn_1995, urban_1995, c3ann_1995, c4ann_1995, c3per_1995, c4per_1995, c3nfx_1995, pastr_1995, range_1995)
-    names(states1995) <- paste("1995",names_states)
-    
-    
-    primf_2005 <- raster(filename,varname="primf", band=1156) 
-    primn_2005 <- raster(filename,varname="primn", band=1156) 
-    secdf_2005 <- raster(filename,varname="secdf", band=1156) 
-    secdn_2005 <- raster(filename,varname="secdn", band=1156) 
-    urban_2005 <- raster(filename,varname="urban", band=1156) 
-    c3ann_2005 <- raster(filename,varname="c3ann", band=1156) 
-    c4ann_2005 <- raster(filename,varname="c4ann", band=1156)
-    c3per_2005 <- raster(filename,varname="c3per", band=1156) 
-    c4per_2005 <- raster(filename,varname="c4per", band=1156) 
-    c3nfx_2005 <- raster(filename,varname="c3nfx", band=1156) 
-    pastr_2005 <- raster(filename,varname="pastr", band=1156) 
-    range_2005 <- raster(filename,varname="range", band=1156) 
-    
-    states2005 <- stack(primf_2005, primn_2005, secdf_2005, secdn_2005, urban_2005, c3ann_2005, c4ann_2005, c3per_2005, c4per_2005, c3nfx_2005, pastr_2005, range_2005)
-    names(states2005) <- paste("2005",names_states)
-    
-    
     primf_2015 <- raster(filename,varname="primf", band=1166) 
     primn_2015 <- raster(filename,varname="primn", band=1166)
     secdf_2015 <- raster(filename,varname="secdf", band=1166) 
@@ -80,18 +49,10 @@ para realizar este.  analisis, se utilizaron dos bases de datos, la primera sien
     range_2015 <- raster(filename,varname="range", band=1166) 
     
     states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015, urban_2015, c3ann_2015, c4ann_2015, c3per_2015, c4per_2015, c3nfx_2015, pastr_2015, range_2015)
-    names(states2015) <- paste("2015",names_states)
-    
-    
-    setwd("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/archivos")
+    names(states2015) 
+
     archivo<- "C:/Users/Maria/Documents/servicio social/bases de datos/states_historic.nc"
-    state<- raster(filename,varname="primf", band=1166)
-    
-    files<- list.files(pattern = ".nc4", full.names = FALSE)
-    files.ras <- lapply(files, raster)
-    fechas<- substr(files, star=28, stop=33) #extraer fechas
-    names(files.ras) <- paste('WROOT',fechas) 
-    files.stack <- stack(files.ras)
+    state<- raster(filename,varname="primf", band = 1166)
     
     setwd("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/merra_2015")
     files2015<- list.files(pattern = ".nc4", full.names = FALSE)
@@ -100,26 +61,8 @@ para realizar este.  analisis, se utilizaron dos bases de datos, la primera sien
     names(files.ras2015) <- paste('WROOT',fechas2015) 
     files.stack2015 <- stack(files.ras2015)
     
-    #centroides
-    #poly<- rasterToPolygons(ras)
-    #poligonos<- st_as_sf(poly)
-    #centroides<-sf::st_centroid(poligonos) # VERIFICAR WARNINGS()
-    
-    #solucion de warnings: El map.gpkg parece estar en WGS84 (EPSG:4326) y es un CRS geométrico; Para que un centroide funcione necesitas datos proyectados.
-    #Necesita sf::st_transform() a una proyección diferente; cuál dependerá de sus datos, con la cual no estamos familiarizados, pero elija una con orientación este y norte.
-    #Para volver a verificar, considere ejecutar st_is_longlat() en su objeto; siempre que devuelva VERDADERO, el centroide no funcionará.
-    
-    #st_crs(poligonos)
-    #+datum=WGS84 +no_defs -- no definido 
-    #st_transform(poligonos, proj4string = "??")
-        
-    #extraer valores en centroides
-    #rasValu<-terra::extract(ras, centroides)
-    
-    ############# ALTERNATIVA CON RASTER
-    # y = as_Spatial(centroides)
-    # q<-raster::extract(ras, y)
-    
+   
+
     # Transform into polygon
     poly = rasterToPolygons(state) 
     # Add centroids to database
