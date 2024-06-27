@@ -1,5 +1,6 @@
 # arboles de prediccion de cambios en el manejo forestal 
 
+para realizar este.  analisis, se utilizaron dos bases de datos, la primera siendo la de cambio de uso del suelo, la cual se encuentra disponible en el siguiente enlace: enlace 
 
     require(ncdf4)
     library(raster)
