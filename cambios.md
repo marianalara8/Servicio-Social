@@ -228,17 +228,31 @@
                            cambio_manejo,medias_merra=M,  land1, land4))
     write.csv(data_arbol_cambio, "data_arbo_cambio.csv")
     
-    
-    
-    
-    
+
+### codigo de arboles
+
     library(rpart)
     library(rpart.plot)
     
-  
-  arbol_cambios1985 <- rpart(Quantiles_cambio~ 
-                              X1985.primf + X1985.primn + X1985.secdf +
-                              X1985.secdn + X1985.urban + X1985.c3ann +  
-                              X1985.c4ann + X1985.c3per + X1985.c4per + 
-                              X1985.c3nfx + X1985.pastr + X1985.range,
-                            data = data_arbol_cambio, method = "class")
+    data_arbol<- read.csv("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/merra_2015/data_arbo_cambio.csv")
+    
+    arbol_cambios1985 <- rpart(Quantiles_cambio~ 
+                                 X1985.primf + X1985.primn + X1985.secdf +
+                                 X1985.secdn + X1985.urban + X1985.c3ann +  
+                                 X1985.c4ann + X1985.c3per + X1985.c4per + 
+                                 X1985.c3nfx + X1985.pastr + X1985.range,
+                               data = data_arbol, method = "class")
+    rpart.plot(arbol_cambios1985)
+    
+    arbol_cambios2015 <- rpart(Quantiles_cambio~ 
+                                   X2015.primf + X2015.primn + X2015.secdf +
+                                   X2015.secdn + X2015.urban + X2015.c3ann +  
+                                   X2015.c4ann + X2015.c3per + X2015.c4per + 
+                                   X2015.c3nfx + X2015.pastr + X2015.range, 
+                                 data = data_arbol)
+    rpart.plot(arbol_cambios2015)
+    
+    cambios_merra <- rpart(Quantiles_cambio ~ medias_merra,
+                           data=data_arbol)
+    rpart.plot(cambios_merra)
+         
