@@ -2,9 +2,9 @@
 
 para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el vínculo: https://disc.gsfc.nasa.gov/datasets. En estos datos, se tiene disponible informacion de 1890 a 2024, de sistintas variables entre las cuales se encuentra la tasa de humedad en la zona de raices por pixel. Asi, se realizo una mineria de datos, obteniendo unicamente la serie de tiempo correspondiente al año 2015, con datos desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes.
 
-Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los que están disponibles en: https://luh.umd.edu. Lo que proporciona esta base de datos es un recuento historico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos se minaron la capa de datos correspondientes a los años 2015 y 1985.
+Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los cuales están disponibles en: https://luh.umd.edu. Lo que proporciona esta base de datos es un recuento historico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos se minaron las capas de datos correspondientes a los años 2015 y 1985.
 
-Primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de cambio de uso del suelo, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
+Para este proyecto, primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de cambio de uso del suelo, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
 
     require(ncdf4)
     library(raster)
@@ -16,7 +16,6 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
     library(rpart.plot)
     
     filename <- "C:/Users/Maria/Documents/servicio social/bases de datos/states_historic.nc"
-    states_nc <- nc_open(filename)
     names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
     
     primf_1985 <- raster(filename,varname="primf", band=1136) 
@@ -61,63 +60,21 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
     names(files.ras2015) <- paste('WROOT',fechas2015) 
     files.stack2015 <- stack(files.ras2015)
     
-   
-
     # Transform into polygon
     poly = rasterToPolygons(state) 
     # Add centroids to database
     centroids <- getSpPPolygonsLabptSlots(poly) #centroides de states
     # save it into GeoJSON of merra
-    merra = raster::extract(files.stack, centroids)
     merra2015 =raster::extract(files.stack2015, centroids)
     #Extract of states
     land1 =raster::extract(states1985, centroids)
-    land2 =raster::extract(states1995, centroids)
-    land3 =raster::extract(states2005, centroids)
-    land4 =raster::extract(states2015, centroids)
+    land2 =raster::extract(states2015, centroids)
     
     #matriz
-    
-    data_merra<- cbind(lon=centroids[,1], lat=centroids[,2], merra)#merra wroot humerdad en raices
     data_merra2015 <- cbind(lon=centroids[,1], lat=centroids[,2], merra2015 )
-    data_states<- cbind(lon=centroids[,1], lat=centroids[,2], land1, land2, land3, land4)
-    write.csv(data_states, "data_states.csv")
-    
-    #trabajo con la database merra
-    
-    M= NULL
-    V= NULL
-    C= NULL
-    n= length(data_merra[,1]) 
-    
-    for(i in 1:n){
-      M[i]= mean(data_merra[i,3:532]) 
-      V[i]= var(data_merra[i,3:532])
-      C[i]= cor(x=data_merra[i,3:531], y=data_merra[i,4:532])
-      print(i)
-    }
-    
-    Y <- cbind(lon=centroids[,1], lat=centroids[,2], M,V,C)
-    write.csv(Y, "Y_serie_completa.csv")
-    
-     
-    medias <- cbind(lon=centroids[,1], lat=centroids[,2], M)
-    medias_ras= rasterFromXYZ(medias)
-    plot(medias_ras)
-    #writeRaster(medias_ras,'medias.tif')
-    
-    varianzas <- cbind(lon=centroids[,1], lat=centroids[,2], V)
-    varianzas_ras= rasterFromXYZ(varianzas)
-    plot(varianzas_ras)
-    #writeRaster(varianzas_ras,'varianzas.tif', overwrite=TRUE)
-    
-    correlacion <- cbind(lon=centroids[,1], lat=centroids[,2], C)
-    correlacion_ras = rasterFromXYZ(correlacion)
-    plot(correlacion_ras)
-    #writeRaster(correlacion_ras,'correlacion.tif')
-    
+    data_states<- cbind(lon=centroids[,1], lat=centroids[,2], land1, land2)
+
     #trabajo con la database merra 2015
-    
     M= NULL
     V= NULL
     C= NULL
@@ -125,17 +82,14 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
     
     for(i in 1:n){
       M[i]= mean(data_merra2015[i,3:14]) 
-      V[i]= var(data_merra2015[i,3:14])
-      C[i]= cor(x=data_merra2015[i,3:13], y=data_merra2015[i,4:14])
-      print(i)
     }
-    
-    
+
+    #funcion que asigna cada dato dentro de un cuantil 
     quanti <- function(df){
       Q<-rep(0, length(df)) 
       q<- quantile(df, prob=c(0,0.25,0.5,0.75,1), na.rm=TRUE)
-      print(q)
       i=1
+      
       for (i in 1:length(df)) {
         if (is.na(df[i])){
           Q[i] = NA
@@ -154,18 +108,16 @@ Primeramente se homologaron los datos con respecto a las coordenadas de los cent
         Q[i] ='q4'
         }
       }
-      return(Q)
       }
-    
-    #Quantiles_medias<-as.integer(cut(M, quantile(M), include.lowest= T))
-    Quantiles_medias <- quanti(M)
-    Quantiles_varianza <- quanti(V)
-    Quantiles_correlacion <- quanti(C)
-    
-    nomanejo1985 <- land1[,1]+land1[,2] + land1[,3] +land1[,4]
-    nomanejo2015 <- land4[,1]+land4[,2] + land4[,3] +land4[,4]
+
+Posterior a esto se asigno la ceriable no menejo, la cual engloba los usos de suelo forestales y no forestares primario y secundarios. Posterior a esto se realizo una resta por pixel, nombrandolo cambio en el manejo, este cambio puede presentarse positivo o negativo. En caso de encontrarse un valor positivo, significa que se gano cierta proporcion del pixel con cobertura vegetal, del mismo modo, los valores negativos, indican la proporcion de pardida de vegetacion en el pixel. 
+
+    #clases de no manejo 
+    nomanejo1985 <- land1[,1] + land1[,2] + land1[,3] + land [,4]
+    nomanejo2015 <- land2[,1] + land2[,2] + land2[,3] + land2[,4]
     
     cambio_manejo= nomanejo1985 - nomanejo2015
+    #los pixeles se clasificaron en cuantiles. 
     Quantiles_cambio <- quanti(cambio_manejo)
     
     data_arbol_cambio<- as.data.frame(cbind(lon=centroids[,1], lat=centroids[,2], Quantiles_cambio, 
