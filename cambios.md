@@ -71,7 +71,7 @@ Para este proyecto, primeramente se homologaron los datos con respecto a las coo
     land2 =raster::extract(states2015, centroids)
     
     #matriz
-    data_merra2015 <- cbind(lon=centroids[,1], lat=centroids[,2], merra2015 )
+    data_merra2015 <- cbind(lon=centroids[,1], lat=centroids[,2], merra2015)
     data_states<- cbind(lon=centroids[,1], lat=centroids[,2], land1, land2)
 
     #trabajo con la database merra 2015
@@ -120,17 +120,15 @@ Posterior a esto se asigno la ceriable no menejo, la cual engloba los usos de su
     #los pixeles se clasificaron en cuantiles. 
     Quantiles_cambio <- quanti(cambio_manejo)
     
-    data_arbol_cambio<- as.data.frame(cbind(lon=centroids[,1], lat=centroids[,2], Quantiles_cambio, 
+    data_arbol<- as.data.frame(cbind(lon=centroids[,1], lat=centroids[,2], Quantiles_cambio, 
                            cambio_manejo,medias_merra=M,  land1, land4))
-    write.csv(data_arbol_cambio, "data_arbo_cambio.csv")
-    
 
 ### codigo de arboles
 
+para la creacion de ar
+
     library(rpart)
     library(rpart.plot)
-    
-    data_arbol<- read.csv("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/merra_2015/data_arbo_cambio.csv")
     
     arbol_cambios1985 <- rpart(Quantiles_cambio~ 
                                  X1985.primf + X1985.primn + X1985.secdf +
