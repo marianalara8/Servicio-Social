@@ -10,12 +10,11 @@ Para este proyecto, primeramente se homologaron los datos con respecto a las coo
     library(raster)
     library(fields)
     library(sf)
-    library(ggplot2)
-    library(viridis)
     library(rpart)
     library(rpart.plot)
     
-    filename <- "C:/Users/Maria/Documents/servicio social/bases de datos/states_historic.nc"
+    #Cargar los datos:
+    filename <- "~/states_historic.nc"
     names_states<-c("primf", "primn", "secdf", "secdn", "urban", "c3ann", "c4ann", "c3per", "c4per", "c3nfx", "pastr", "range")
     
     primf_1985 <- raster(filename,varname="primf", band=1136) 
@@ -50,7 +49,7 @@ Para este proyecto, primeramente se homologaron los datos con respecto a las coo
     states2015 <- stack(primf_2015, primn_2015, secdf_2015, secdn_2015, urban_2015, c3ann_2015, c4ann_2015, c3per_2015, c4per_2015, c3nfx_2015, pastr_2015, range_2015)
     names(states2015) 
 
-    archivo<- "C:/Users/Maria/Documents/servicio social/bases de datos/states_historic.nc"
+    archivo<- "~/states_historic.nc"
     state<- raster(filename,varname="primf", band = 1166)
     
     setwd("C:/Users/Maria/Documents/servicio social/bases de datos/humedad y temp/humedad_root/merra_2015")
@@ -59,27 +58,26 @@ Para este proyecto, primeramente se homologaron los datos con respecto a las coo
     fechas2015<- substr(files2015, star=28, stop=33) #extraer fechas
     names(files.ras2015) <- paste('WROOT',fechas2015) 
     files.stack2015 <- stack(files.ras2015)
-    
-    # Transform into polygon
+
+    #obtencion de centroides de states
+    # Transformar en poligono 
     poly = rasterToPolygons(state) 
-    # Add centroids to database
-    centroids <- getSpPPolygonsLabptSlots(poly) #centroides de states
-    # save it into GeoJSON of merra
+    # guardar los centroides en una base de datos
+    centroids <- getSpPPolygonsLabptSlots(poly) 
+    # extraer datos de merra en los centroides
     merra2015 =raster::extract(files.stack2015, centroids)
-    #Extract of states
+    #Extraer datos de states
     land1 =raster::extract(states1985, centroids)
     land2 =raster::extract(states2015, centroids)
-    
-    #matriz
+
+Despues de extraer los datos, se obtuvu una base de datos para poder manipular 
+    # creacion de matriz para trabajar
     data_merra2015 <- cbind(lon=centroids[,1], lat=centroids[,2], merra2015)
     data_states<- cbind(lon=centroids[,1], lat=centroids[,2], land1, land2)
 
     #trabajo con la database merra 2015
     M= NULL
-    V= NULL
-    C= NULL
     n= length(data_merra2015[,1]) 
-    
     for(i in 1:n){
       M[i]= mean(data_merra2015[i,3:14]) 
     }
