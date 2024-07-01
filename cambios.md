@@ -110,7 +110,7 @@ Para este proyecto, primeramente se homologaron los datos con respecto a las coo
       }
       }
 
-Posterior a esto se asigno la ceriable no menejo, la cual engloba los usos de suelo forestales y no forestares primario y secundarios. Posterior a esto se realizo una resta por pixel, nombrandolo cambio en el manejo, este cambio puede presentarse positivo o negativo. En caso de encontrarse un valor positivo, significa que se gano cierta proporcion del pixel con cobertura vegetal, del mismo modo, los valores negativos, indican la proporcion de pardida de vegetacion en el pixel. 
+Posterior a esto se asigno la variable no menejo, la cual engloba los usos de suelo forestales y no forestares primario y secundarios. Posterior a esto se realizo una resta por pixel, nombrandolo cambio en el manejo, este cambio puede presentarse positivo o negativo. En caso de encontrarse un valor positivo, significa que se gano cierta proporcion del pixel con cobertura vegetal, del mismo modo, los valores negativos, indican la proporcion de pardida de vegetacion en el pixel. 
 
     #clases de no manejo 
     nomanejo1985 <- land1[,1] + land1[,2] + land1[,3] + land [,4]
@@ -150,3 +150,6 @@ para la creacion de ar
                            data=data_arbol)
     rpart.plot(cambios_merra)
          
+
+
+
