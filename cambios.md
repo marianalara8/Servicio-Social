@@ -152,4 +152,20 @@ para la creacion de ar
          
 
 
+![](https://github.com/marianalara8/Servicio-Social/blob/main/cambio_1985.png)
+
+> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
+
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/cambios2015.png)
+
+> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
+
+![](https://github.com/marianalara8/Servicio-Social/blob/main/cambio_merra.png)
+
+> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
+
+
+
+
 
