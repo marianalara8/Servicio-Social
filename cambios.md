@@ -150,20 +150,18 @@ para la creacion de los arboles de clasificacion se utilizaron la paquetería  r
     rpart.plot(cambios_merra)
          
 
-
 ![](https://github.com/marianalara8/Servicio-Social/blob/main/cambio_1985.png)
 
-> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
-
-![](https://github.com/marianalara8/Servicio-Social/blob/main/cambios2015.png)
-
-> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
-
-![](https://github.com/marianalara8/Servicio-Social/blob/main/cambio_merra.png)
-
-> Arbol de clasificacion con datos de MERRA-2 en 2015, en promedios de todo el año clasificado en quantiles y states de 2015.
+> Arbol de clasificacion con datos de states en 1985, con los cuantiles del cambio del manejo forestal entre 1985 y 2015. 
 
 
+[](https://github.com/marianalara8/Servicio-Social/blob/main/cambios2015.png)
 
+> Arbol de clasificacion con datos de states en 2015, en promedios de todo el año clasificado en quantiles y states de 2015
+
+
+el predictor que mejor divide la clase que contiene los cuantiles del cambio en el manejo forestal son las plantaciones de tipo C3 anual dividiendo
+al cuartel 92 donde el
+100% de los datos se dividen a partir de esta clase los datos que cuentan con mas de 31 e-21
 
 
