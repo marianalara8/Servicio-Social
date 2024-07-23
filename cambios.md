@@ -1,10 +1,10 @@
 # arboles de prediccion de cambios en el manejo forestal 
 
-para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el vínculo: https://disc.gsfc.nasa.gov/datasets. En estos datos, se tiene disponible informacion de 1890 a 2024, de sistintas variables entre las cuales se encuentra la tasa de humedad en la zona de raices por pixel. Asi, se realizo una mineria de datos, obteniendo unicamente la serie de tiempo correspondiente al año 2015, con datos desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes.
+Para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el vínculo: https://disc.gsfc.nasa.gov/datasets. En estos datos, se tiene disponible información de 1890 a 2024, de distintas variables entre las cuales se encuentra la tasa de humedad en la zona de raíces por píxel. Así, se realizó una minería de datos, obteniendo únicamente la serie de tiempo correspondiente al año 2015, con datos desde el mes de enero hasta el mes de diciembre del mismo año, extraídos como datos de mes con mes.
 
-Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los cuales están disponibles en: https://luh.umd.edu. Lo que proporciona esta base de datos es un recuento historico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos se minaron las capas de datos correspondientes a los años 2015 y 1985.
+Así también se utilizaron datos cambio de uso de suelo desde lo histórico (states), los cuales están disponibles en: https://luh.umd.edu. Lo que proporciona esta base de datos es un recuento histórico de los usos del suelo desde el año 850, hasta el año de 2015. En cuanto a estos datos se minaron las capas de datos correspondientes a los años 2015 y 1985.
 
-Para este proyecto, primeramente se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de cambio de uso del suelo, para esto se utilizaron las paqueteria raster de R. Se realizo de la siguiente manera:
+Para este proyecto, primeramente, se homologaron los datos con respecto a las coordenadas de los centroides de los pixeles de la base de datos de cambio de uso del suelo, para esto se utilizó la paquetería ráster de R. Se realizo de la siguiente manera:
 
     require(ncdf4)
     library(raster)
@@ -108,7 +108,7 @@ Despues de extraer los datos, se obtuvu una base de datos para poder manipular
       }
       }
 
-Posterior a esto se asigno la variable no menejo, la cual engloba los usos de suelo forestales y no forestares primario y secundarios. Posterior a esto se realizo una resta por pixel, nombrandolo cambio en el manejo, este cambio puede presentarse positivo o negativo. En caso de encontrarse un valor positivo, significa que se gano cierta proporcion del pixel con cobertura vegetal, del mismo modo, los valores negativos, indican la proporcion de pardida de vegetacion en el pixel. 
+Posterior a esto se asignó la variable no manejo, la cual engloba los usos de suelo forestales y no forestares primario y secundarios. Posterior a esto se realizó una resta por pixel, nombrándolo cambio en el manejo, este cambio puede presentarse positivo o negativo. En caso de encontrarse un valor positivo, significa que se ganó cierta proporción del pixel con cobertura vegetal, del mismo modo, los valores negativos, indican la proporción de perdida de vegetación forestal o no forestal en el pixel.
 
     #clases de no manejo 
     nomanejo1985 <- land1[,1] + land1[,2] + land1[,3] + land [,4]
@@ -160,8 +160,5 @@ para la creacion de los arboles de clasificacion se utilizaron la paquetería  r
 > Arbol de clasificacion con datos de states en 2015, en promedios de todo el año clasificado en quantiles y states de 2015
 
 
-el predictor que mejor divide la clase que contiene los cuantiles del cambio en el manejo forestal son las plantaciones de tipo C3 anual dividiendo
-al cuartel 92 donde el
-100% de los datos se dividen a partir de esta clase los datos que cuentan con mas de 31 e-21
 
 
