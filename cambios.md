@@ -121,6 +121,12 @@ Posterior a esto se asignó la variable no manejo, la cual engloba los usos de s
     data_arbol<- as.data.frame(cbind(lon=centroids[,1], lat=centroids[,2], Quantiles_cambio, 
                            cambio_manejo,medias_merra=M,  land1, land4))
 
+Asi, los cuantiles se clasificaron de la siguiente manera:
+   - q1 (-0.8909351 a -0.00003473455)
+   - q2 (-0.00003473455 a 0.000)
+   - q3 (0.0000 a 0.01420553)
+   - q4 (0.01420553 a 0.8909005)
+
 ### codigo de arboles
 
 para la creacion de los arboles de clasificacion se utilizaron la paquetería  rpart con esta,se programaron los arboles 
