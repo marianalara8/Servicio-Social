@@ -155,7 +155,7 @@ para la creacion de los arboles de clasificacion se utilizaron la paquetería  r
 > Arbol de clasificacion con datos de states en 1985, con los cuantiles del cambio del manejo forestal entre 1985 y 2015. 
 
 
-[](https://github.com/marianalara8/Servicio-Social/blob/main/cambios2015.png)
+![](https://github.com/marianalara8/Servicio-Social/blob/main/cambios2015.png)
 
 > Arbol de clasificacion con datos de states en 2015, en promedios de todo el año clasificado en quantiles y states de 2015
 
