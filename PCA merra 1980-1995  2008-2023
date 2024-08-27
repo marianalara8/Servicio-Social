@@ -1,5 +1,6 @@
 # PCA merra comparacion de periodos 
 
+
 Para este proyecto se utilizaron datos del proyecto MERRA-2 de la NASA disponibles en el 
 vínculo: https://disc.gsfc.nasa.gov/datasets. En estos datos, se tiene disponible información de 1890 a 2024,
 de distintas variables entre las cuales se encuentra la tasa de humedad en la zona de raíces por píxel. Así, 
