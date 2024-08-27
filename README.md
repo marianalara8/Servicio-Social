@@ -5,10 +5,11 @@
 
 ### Indice
 
-<ul>
-<li>Puntos en poligonos: Nombre.R </li>
-<li>lista</li>
+<u>
 <<li>arbol de predictores</li>
+<li>lista</li>
+<li>PCA humedad en dos periodos de tiempo</li>
+<li>PCA humedad en el suelo t - t-1 </li>
 </ul>
 
 
