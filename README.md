@@ -7,6 +7,6 @@
 <<li>arbol de predictores</li>
 <li>PCA humedad en dos periodos de tiempo</li>
 <li>PCA humedad en el suelo t - t-1 </li>
-</ul>
+
 
 
